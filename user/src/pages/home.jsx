@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar";
 import { MdCelebration } from "react-icons/md";
 import { LuPartyPopper } from "react-icons/lu";
 import { generateAndSaveFCMToken } from "../utilis/token";
   
 const Home = () => {
-  
+
   const [vendors, setVendors] = useState([]);
   const [permissionChecked, setPermissionChecked] = useState(null);
 
