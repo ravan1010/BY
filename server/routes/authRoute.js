@@ -45,16 +45,16 @@ router.get(
 
       res.cookie("U_AU", token, {
         httpOnly: true,
-        secure: false, // true in production (HTTPS)
-        sameSite: "Lax",
+        secure: true, // true in production (HTTPS)
+        sameSite: "None",
       });
       return res.redirect("https://vendor.byslot.online/success");
     } else {
 
       res.cookie("UA", token, {
         httpOnly: true,
-        secure: false, // true in production (HTTPS)
-        sameSite: "Lax",
+        secure: true, // true in production (HTTPS)
+        sameSite: "None",
       });
       return res.redirect("https://byslot.online/success");
     }
@@ -106,8 +106,8 @@ router.get('/user/protected', authToken, (req, res) => {
 router.post("/vendor/logout", authenticateToken, (req, res) => {
   res.clearCookie("U_AU", {
         httpOnly: true,
-        secure: false, // true in production (HTTPS)
-        sameSite: "Lax",
+        secure: true, // true in production (HTTPS)
+        sameSite: "None",
       });
 
   return res.status(200).json({ message: "Logged out successfully" });
@@ -119,8 +119,8 @@ router.post("/user/logout", authToken, (req, res) => {
 
    res.clearCookie("UA", {
         httpOnly: true,
-        secure: false, // true in production (HTTPS)
-        sameSite: "Lax",
+        secure: true, // true in production (HTTPS)
+        sameSite: "None",
       });
 
   return res.status(200).json({ message: "Logged out successfully" });
