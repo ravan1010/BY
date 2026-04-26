@@ -6,7 +6,7 @@ export const authenticateToken = (req, res, next) => {
   // console.log("Token from cookie:", token); // Debugging log
 
     if (!token) {  
-        return res.status(401).json({ message: "No token" });
+        return res.json({ message: "No token" });
     }
 
     try {
