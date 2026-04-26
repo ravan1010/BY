@@ -50,7 +50,7 @@ const Profile = () => {
           </div>
 
           <a
-            href="http://localhost:5174"
+            href="https://vendor.byslot.online/"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-4 inline-block text-sm text-blue-600 hover:underline"
