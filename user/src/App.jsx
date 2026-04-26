@@ -21,7 +21,7 @@ function App() {
           <Route path="/booked" element={<Booked />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/vendor/:id" element={<VendorDetails />} />
-          <Route path="/event/:id/:vendor" element={<EventPage />} />
+          <Route path="/event/:id/:vendor/:variant" element={<EventPage />} />
 
           {/* <Route path="*"  /> */}
         </Route>
