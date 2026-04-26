@@ -26,7 +26,11 @@ import userUIRoute from "./routes/userRoutes/userUIRoute.js";
 // importing vendor Dashboard
 import vendorDashboard from "./routes/vendorDashboard.js";
 
+// importing vendor booking
 import vendorBooking from "./routes/vendorBooking.js"
+
+// importing main vendor active page
+import vendorActive from "./routes/mainRoute/vendorActive.js"
 
 dotenv.config();
 
@@ -52,6 +56,7 @@ app.use("/api", vendorDashboard);
 app.use("/api", vendorBooking);
 app.use("/api/user", userProfileRoutes);
 app.use("/api/user", userUIRoute);
+app.use('/main', vendorActive);
 
 
 connectDB();
