@@ -10,7 +10,7 @@ passport.use(
     {      
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
+      callbackURL: "https://api.byslot.online/auth/google/callback"  
     },
     async (accessToken, refreshToken, profile, done) => {
       let vendor = await vendorDATA.findOne({ googleId: profile.id });
