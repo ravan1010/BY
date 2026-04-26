@@ -26,12 +26,12 @@ router.put('/notifications/fcmToken', authToken, async (req, res) => {
 
 router.get('/vendors', authToken, async (req, res) => {
     try {
-        const vendors = await vendorDATA.find({});
+        const vendors = await vendorDATA.find({role: "vendor"});
         res.status(200).json(vendors);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }   
-})
+}) 
 
 router.get('/vendor/:id', authToken, async (req, res) => {
     try {

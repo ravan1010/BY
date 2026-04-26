@@ -19,7 +19,7 @@ const Home = () => {
       const res = await api.get("/api/user/vendors");
       setVendors(res.data);
     } catch (err) {
-      console.error(err);
+      console.error(err); 
     }
   };
 
