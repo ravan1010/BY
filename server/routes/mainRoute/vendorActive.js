@@ -8,7 +8,7 @@ router.get('/vendor/data', async (req, res) => {
     console.log(
         'suas'
     )
-    const vendors = await vendorDATA.find({ active: 'false' });
+    const vendors = await vendorDATA.find({ role: "vendor", active: "false"  });
     console.log(vendors)
 
     if (vendors.length === 0) {
