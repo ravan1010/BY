@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/success" element={<Success />} />
-        {/* <Route element={<ProtectedUSER />}> */}
+        <Route element={<ProtectedUSER />}>
           <Route path="/" element={<Home />} />
           <Route path="/booked" element={<Booked />} />
           <Route path="/profile" element={<Profile />} />
@@ -24,7 +24,7 @@ function App() {
           <Route path="/event/:id/:vendor" element={<EventPage />} />
 
           {/* <Route path="*"  /> */}
-        {/* </Route> */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );
