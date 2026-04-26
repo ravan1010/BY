@@ -37,7 +37,7 @@ router.get(
     const token = jwt.sign(
       { id: req.user._id },
       process.env.JWT_SECRET,
-      { expiresIn: "200d" }
+      { expiresIn: "100d" }
     );
 
     // Redirect based on role
@@ -47,6 +47,7 @@ router.get(
         httpOnly: true,
         secure: true, // true in production (HTTPS)
         sameSite: "None",
+        maxAge: 100 * 24 * 60 * 60 * 1000 // 100 days
       });
       return res.redirect("https://vendor.byslot.online/success");
     } else {
@@ -55,6 +56,7 @@ router.get(
         httpOnly: true,
         secure: true, // true in production (HTTPS)
         sameSite: "None",
+        maxAge: 100 * 24 * 60 * 60 * 1000 // 100 days
       });
       return res.redirect("https://byslot.online/success");
     }
