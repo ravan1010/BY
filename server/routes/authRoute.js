@@ -48,7 +48,7 @@ router.get(
         secure: false, // true in production (HTTPS)
         sameSite: "Lax",
       });
-      return res.redirect("http://localhost:5174/success");
+      return res.redirect("https://vendor.byslot.online/success");
     } else {
 
       res.cookie("UA", token, {
@@ -56,7 +56,7 @@ router.get(
         secure: false, // true in production (HTTPS)
         sameSite: "Lax",
       });
-      return res.redirect("http://localhost:5173/success");
+      return res.redirect("https://byslot.online/success");
     }
 
   }
