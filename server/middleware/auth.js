@@ -24,7 +24,7 @@ export const authToken = (req, res, next) => {
   // console.log("Token in authToken middleware:", token);
 
     if (!token) {  
-        return res.status(401).json({ message: "No token" });
+        return res.json({ message: "No token" });
     }
 
     try {
