@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Login() {
   const handleGoogleLogin = () => {
-    window.open("http://localhost:5000/auth/google/vendor", "_self");
+    window.open("https://api.byslot.online/auth/google/vendor", "_self");
   };
 
   return (
