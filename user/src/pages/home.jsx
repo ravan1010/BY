@@ -5,8 +5,9 @@ import Navbar from "../components/Navbar";
 import { MdCelebration } from "react-icons/md";
 import { LuPartyPopper } from "react-icons/lu";
 import { generateAndSaveFCMToken } from "../utilis/token";
-
+  
 const Home = () => {
+  
   const [vendors, setVendors] = useState([]);
   const [permissionChecked, setPermissionChecked] = useState(null);
 
