@@ -10,9 +10,9 @@ const EventPage = () => {
 
     const [activeVariant, setActiveVariant] = useState(null);
     const [eventPost, setEventPost] = useState(null);
-    const [dates, setdates] = useState([])
-    const [mobile, setmobile] = useState("")
-    const [seletedDate, setseleteDate] = useState(null)
+    const [dates, setdates] = useState([]);
+    const [mobile, setmobile] = useState("");
+    const [seletedDate, setseleteDate] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 

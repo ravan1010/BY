@@ -53,7 +53,7 @@ const VendorBooking = () => {
         }
     }
 
-    const handleVerify = async (id) => {
+    const handleProgressVerify = async (id) => {
         if (!otp || otp.length !== 4) {
             return alert("Enter valid 4-digit OTP");
         }
@@ -156,7 +156,7 @@ const VendorBooking = () => {
                                                     />
 
                                                     <button
-                                                        onClick={() => handleVerify(booking._id)}
+                                                        onClick={() => handleProgressVerify(booking._id)}
                                                         disabled={loading}
                                                         className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg disabled:opacity-50"
                                                     >
@@ -165,9 +165,33 @@ const VendorBooking = () => {
                                                 </div>
                                             </>
                                         )}
-                                        {
+                                            {booking.status === "progress" && (
+                                            <>
+                                                <div className="mt-3 w-full space-y-3">
+                                                    <p className="text-sm text-gray-600">
+                                                        📞 Mobile: {booking.UserMobile}
+                                                    </p>
+                                                    <input
+                                                        type="number"
+                                                        placeholder="Enter 4-digit OTP"
+                                                        value={otp}
+                                                        minLength={4}
+                                                        maxLength={4}
+                                                        onChange={(e) => setOtp(e.target.value)}
+                                                        className="w-full p-3 border rounded-lg text-center tracking-widest"
+                                                    />
 
-                                        }
+                                                    <button
+                                                        onClick={() => (booking._id)}
+                                                        disabled={loading}
+                                                        className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg disabled:opacity-50"
+                                                    >
+                                                        {loading ? "Verifying..." : "Verify OTP"}
+                                                    </button>
+                                                </div>
+                                            </>
+                                        )}
+                                        
                                     </div>
                                 }
                             </div>

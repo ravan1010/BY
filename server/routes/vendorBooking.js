@@ -79,7 +79,7 @@ router.post('/vendor/booking/toProgress/:id', authenticateToken, async (req, res
         const user = await vendorDATA.findById(booking.UserId)
         const title = 'events';
         const body = 'Events accepted by Vendor';
-        const url = 'http://localhost:5173/booked' 
+        const url = '/booked' 
 
         await sendPushNotification(user.UserfcmToken, title, body, url )
 
@@ -118,6 +118,49 @@ router.post('/vendor/booking/toProgress/verify/:id', authenticateToken, async (r
         // ✅ optional: update status after verification
         booking.status = "progress";
         booking.ProgressOTP = null; // clear OTP after use
+
+         // ✅ generate OTP (secure)
+        const otp = Math.floor(1000 + Math.random() * 9000);
+
+        // ✅ update booking
+        booking.completeOTP = otp;
+
+        await booking.save();
+
+        res.status(200).json({
+            success: true,
+            message: "OTP verified successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong"
+        });
+    }
+});
+
+router.post('/vendor/booking/complete/verify/:id', authenticateToken, async (req, res) => {
+    try {
+        const { otp } = req.body;
+
+        // ✅ find booking with id + otp
+        const booking = await BookingDATA.findOne({
+            _id: req.params.id,
+            completeOTP: otp
+        });
+
+        if (!booking) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid OTP"
+            });
+        }
+
+        // ✅ optional: update status after verification
+        booking.status = "complete";
+        booking.completeOTP = null; // clear OTP after use
 
         await booking.save();
 
