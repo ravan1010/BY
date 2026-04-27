@@ -79,6 +79,32 @@ const VendorBooking = () => {
         }
     };
 
+    const handlecompleteVerify = async (id) => {
+        if (!otp || otp.length !== 4) {
+            return alert("Enter valid 4-digit OTP");
+        }
+
+        try {
+            setLoading(true);
+
+            const res = await api.post(
+                `/api/vendor/booking/complete/verify/${id}`,
+                { otp }
+            );
+
+            if (res.data.success) {
+                alert("OTP Verified ✅");
+                setOtp("");
+                fetchData()
+            }
+        } catch (err) {
+            console.error(err);
+            alert(err?.response?.data?.message || "Invalid OTP");
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     return (
         <div>
@@ -182,7 +208,7 @@ const VendorBooking = () => {
                                                     />
 
                                                     <button
-                                                        onClick={() => (booking._id)}
+                                                        onClick={() => handlecompleteVerify(booking._id)}
                                                         disabled={loading}
                                                         className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg disabled:opacity-50"
                                                     >
@@ -192,6 +218,15 @@ const VendorBooking = () => {
                                             </>
                                         )}
                                         
+                                        {booking.status === "complete" && (
+                                            <>
+                                                <div className="mt-3 w-full space-y-3">
+                                                    <p className="text-sm text-green-600">
+                                                        completed
+                                                    </p>
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
                                 }
                             </div>
