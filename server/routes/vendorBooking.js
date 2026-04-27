@@ -79,7 +79,7 @@ router.post('/vendor/booking/toProgress/:id', authenticateToken, async (req, res
         const user = await vendorDATA.findById(booking.UserId)
         const title = 'events';
         const body = 'Events accepted by Vendor';
-        const url = '/booked' 
+        const url = 'https://byslot.online/booked' 
 
         await sendPushNotification(user.UserfcmToken, title, body, url )
 
@@ -127,6 +127,13 @@ router.post('/vendor/booking/toProgress/verify/:id', authenticateToken, async (r
 
         await booking.save();
 
+        const user = await vendorDATA.findById(booking.UserId)
+        const title = 'events';
+        const body = 'Events accepted by Vendor';
+        const url = 'https://byslot.online/booked' 
+
+        await sendPushNotification(user.UserfcmToken, title, body, url )
+
         res.status(200).json({
             success: true,
             message: "OTP verified successfully"
@@ -163,6 +170,13 @@ router.post('/vendor/booking/complete/verify/:id', authenticateToken, async (req
         booking.completeOTP = null; // clear OTP after use
 
         await booking.save();
+
+        const user = await vendorDATA.findById(booking.UserId)
+        const title = 'events';
+        const body = 'Events accepted by Vendor';
+        const url = 'https://byslot.online/booked' 
+
+        await sendPushNotification(user.UserfcmToken, title, body, url )
 
         res.status(200).json({
             success: true,

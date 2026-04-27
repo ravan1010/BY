@@ -93,7 +93,7 @@ router.post('/booking/:id/:vendor/:variant', authToken, async (req, res) => {
 
         const title = "new booking";
         const body = " you got a new booking please checkout "
-        const url = "http://localhost:5174/"
+        const url = "https://vendor.byslot.online/vendor/bookings"
 
         await sendPushNotification(vendor.VendorfcmToken, title, body,   )
 
