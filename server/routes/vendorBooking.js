@@ -129,7 +129,7 @@ router.post('/vendor/booking/toProgress/verify/:id', authenticateToken, async (r
 
         const user = await vendorDATA.findById(booking.UserId)
         const title = 'events';
-        const body = 'Events accepted by Vendor';
+        const body = 'Events on progress';
         const url = 'https://byslot.online/booked' 
 
         await sendPushNotification(user.UserfcmToken, title, body, url )
@@ -173,7 +173,7 @@ router.post('/vendor/booking/complete/verify/:id', authenticateToken, async (req
 
         const user = await vendorDATA.findById(booking.UserId)
         const title = 'events';
-        const body = 'Events accepted by Vendor';
+        const body = 'Event completed';
         const url = 'https://byslot.online/booked' 
 
         await sendPushNotification(user.UserfcmToken, title, body, url )
