@@ -32,6 +32,8 @@ import vendorBooking from "./routes/vendorBooking.js"
 // importing main vendor active page
 import vendorActive from "./routes/mainRoute/vendorActive.js"
 
+import userUIRouteApp from "./routes/userRoutes/userUIRouteApp.js"
+
 dotenv.config();
 
 const app = express();
@@ -57,6 +59,9 @@ app.use("/api", vendorBooking);
 app.use("/api/user", userProfileRoutes);
 app.use("/api/user", userUIRoute);
 app.use('/main', vendorActive);
+
+
+app.use('/api/user/app', userUIRouteApp)
 
 
 connectDB();

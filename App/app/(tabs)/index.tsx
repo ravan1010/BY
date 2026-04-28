@@ -1,89 +1,129 @@
-import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert, Image } from "react-native";
-import { GoogleSignin, statusCodes } from "@react-native-google-signin/google-signin";
+import React, { useEffect, useState } from "react";
+import { 
+  View, 
+  Text, 
+  TouchableOpacity, 
+  FlatList, 
+  StyleSheet, 
+  ActivityIndicator 
+} from "react-native";
+import { useRouter } from "expo-router";
+import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import axios from "axios";
 
-export default function HomeScreen() {
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        "391356308653-1h9c8q3cfa004as7s197740olh4s5t8k.apps.googleusercontent.com",
-      offlineAccess: true,
-    });
-  }, []);
+// Define your vendor type
+interface Vendor {
+  _id: string;
+  eventName: string;
+}
 
-  const signIn = async () => {
+const Home = () => {
+  const [vendors, setVendors] = useState<Vendor[]>([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  // ✅ Fetch vendors from your API
+  const fetchVendors = async () => {
     try {
-      await GoogleSignin.hasPlayServices();
-
-      console.log('google')
-
-      const userInfo = await GoogleSignin.signIn();
-      const idToken = userInfo.data?.idToken;
-
-      if (!idToken) {
-        throw new Error("No ID Token received");
-      }
-
-      const response = await axios.get(
-        "https://api.byslot.online/auth/google/user"
-      );
-
-      console.log("Login Success:");
-      Alert.alert("Success", "Google Login Successful");
-    } catch (error: any) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        Alert.alert("Cancelled", "Login cancelled");
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        Alert.alert("Wait", "Login already in progress");
-      } else if (
-        error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE
-      ) {
-        Alert.alert("Error", "Play Services not available");
-      } else {
-        console.log(error.response?.data || error.message );
-Alert.alert(
-  "Error",
-  JSON.stringify(error.response?.data || error.message)
-);      }
+      const res = await axios.get("https://api.byslot.online/api/user/vendors");
+      setVendors(res.data);
+    } catch (err) {
+      console.error("Fetch Error:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    fetchVendors();
+  }, []);
+
+  // ✅ Render Item for the list
+  const renderVendor = ({ item }: { item: Vendor }) => (
+    <TouchableOpacity 
+      style={styles.card} 
+      // onPress={() => router.push(`/vendor/${item._id}`)}
+    >
+      <FontAwesome5 name="birthday-cake" size={30} color="#EAB308" />
+      
+      <Text style={styles.vendorName}>{item.eventName}</Text>
+      <Text style={styles.subtitle}>Click to view details</Text>
+      
+      <MaterialIcons name="celebration" size={30} color="#EAB308" />
+    </TouchableOpacity>
+  );
+
+  if (loading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color="#4285F4" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-
-     <TouchableOpacity style={styles.button} onPress={signIn}>
-        <Text style={styles.buttonText}>Login with Google</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>Available Vendors</Text>
+      
+      <FlatList
+        data={vendors}
+        keyExtractor={(item) => item._id}
+        renderItem={renderVendor}
+        contentContainerStyle={styles.listContent}
+        numColumns={2} // Grid layout
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#F3F4F6",
+    paddingTop: 50,
+  },
+  centered: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
-    backgroundColor: "#fff",
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 30,
+    textAlign: "center",
+    color: "#1F2937",
+    marginBottom: 20,
   },
-button: {
-  backgroundColor: "#4285F4",
-  paddingVertical: 14,
-  paddingHorizontal: 30,
-  borderRadius: 10,
-  flexDirection: "row",
-  alignItems: "center",
-},
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
+  listContent: {
+    paddingHorizontal: 10,
+  },
+  card: {
+    backgroundColor: "#fff",
+    flex: 1,
+    margin: 8,
+    padding: 20,
+    borderRadius: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 3, // Shadow for Android
+    shadowColor: "#000", // Shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+  },
+  vendorName: {
+    fontSize: 16,
     fontWeight: "600",
+    color: "#374151",
+    textAlign: "center",
+    marginVertical: 8,
+  },
+  subtitle: {
+    fontSize: 12,
+    color: "#9CA3AF",
+    marginBottom: 8,
   },
 });
+
+export default Home;
