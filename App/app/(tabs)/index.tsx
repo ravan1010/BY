@@ -10,6 +10,7 @@ import {
 import { useRouter } from "expo-router";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import axios from "axios";
+import api from "../api";
 
 // Define your vendor type
 interface Vendor {
@@ -25,7 +26,7 @@ const Home = () => {
   // ✅ Fetch vendors from your API
   const fetchVendors = async () => {
     try {
-      const res = await axios.get("https://api.byslot.online/api/user/app/vendors");
+      const res = await api.get("/api/user/app/vendors");
       setVendors(res.data);
     } catch (err) {
       console.error("Fetch Error:", err);

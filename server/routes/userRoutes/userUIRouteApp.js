@@ -28,4 +28,37 @@ router.get('/profile', auth, async (req, res) => {
     res.status(200).json({ email: userData.email });
 })
 
+
+
+
+
+
+
+
+
+
+router.get('/get/booking', auth, async (req, res) => {
+    try {
+        const userId = req.UA.id;
+
+        const bookings = await BookingDATA
+            .find({ UserId: userId }) // ✅ get all bookings
+            .populate("EventPostID")
+            .populate("VendorId") 
+            // ✅ correct populate
+
+        if (!bookings || bookings.length === 0) {
+            return res.status(200).json([]); // return empty array
+        }
+
+        res.status(200).json(bookings);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Failed to fetch bookings",
+            error
+        });
+    }
+});
 export default router
