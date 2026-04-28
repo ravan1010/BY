@@ -1,24 +1,48 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Stack, useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+    const [id, setid] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+    useEffect(() => {
+        checkUserStatus();
+    }, []);
+
+    const checkUserStatus = async () => {
+        try {
+            const userId = await AsyncStorage.getItem('user_id');
+            if (userId) {
+                setid(true);
+            }
+        } catch (e) {
+            console.log("Failed to load user_id", e);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (isLoading) return;
+
+        if (id) {
+            router.replace('/(tabs)');
+        } else {
+            router.replace('/(login)/login');
+        }
+    }, [id, isLoading]);
+
+    return (
+        <Stack
+            screenOptions={{
+                // ✅ This hides the header for ALL screens in this stack
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="(login)/login" />
+        </Stack>
+    );
 }

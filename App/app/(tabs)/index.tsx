@@ -25,7 +25,7 @@ const Home = () => {
   // ✅ Fetch vendors from your API
   const fetchVendors = async () => {
     try {
-      const res = await axios.get("https://api.byslot.online/api/user/vendors");
+      const res = await axios.get("https://api.byslot.online/api/user/app/vendors");
       setVendors(res.data);
     } catch (err) {
       console.error("Fetch Error:", err);
@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#1F2937",
     marginBottom: 20,
+    borderBottomWidth: 2,
   },
   listContent: {
     paddingHorizontal: 10,
