@@ -120,10 +120,10 @@ router.post('/vendor/booking/toProgress/verify/:id', authenticateToken, async (r
         booking.ProgressOTP = null; // clear OTP after use
 
          // ✅ generate OTP (secure)
-        const otp = Math.floor(1000 + Math.random() * 9000);
+        const otpTOcomplete = Math.floor(1000 + Math.random() * 9000);
 
         // ✅ update booking
-        booking.completeOTP = otp;
+        booking.completeOTP = otpTOcomplete;
 
         await booking.save();
 
