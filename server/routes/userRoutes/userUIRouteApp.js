@@ -39,7 +39,7 @@ router.get('/profile', auth, async (req, res) => {
 
 router.get('/get/booking', auth, async (req, res) => {
     try {
-        const userId = req.UA.id;
+        const userId = req.token;
 
         const bookings = await BookingDATA
             .find({ UserId: userId }) // ✅ get all bookings
