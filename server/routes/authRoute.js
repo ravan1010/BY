@@ -4,14 +4,65 @@ import { Router } from "express";
 const router = Router()
 import dotenv from "dotenv"
 import { authenticateToken, authToken } from "../middleware/auth.js";
+import { OAuth2Client } from 'google-auth-library'
+import vendorDATA from '../models/vendorModel.js';
 dotenv.config()
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 
-// Step 1: user Google Login
+// Step 1: user Google Login in web
 router.get(
   "/google/user",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
+
+// step 1: user Google Login in android
+app.post('/auth/google/user', async (req, res) => {
+  const { token } = req.body;
+
+  if (!token) {
+    return res.status(400).json({ error: "Token is required" });
+  }
+
+  try {
+    // 1. Verify the Google Token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { sub: googleId, email, name, picture } = payload;
+
+    // 2. Search for the user in MongoDB
+    let user = await vendorDATA.findOne({ googleId });
+
+    if (!user) {
+      // 3. If user doesn't exist, create a new one
+      console.log("New user detected, creating account...");
+      user = await vendorDATA.create({
+        googleId,
+        email,
+        name,
+        avatar: picture
+      });
+    } else {
+      console.log("Existing user logged in.");
+    }
+
+    // 4. Send the Internal User ID back to the app
+    // Note: 'user._id' is the MongoDB ObjectId
+    res.json({ 
+      success: true, 
+      userId: user._id, 
+      isNewUser: !user.createdAt 
+    });
+    
+  } catch (error) {
+    console.error("Auth Error:", error);
+    res.status(401).json({ error: "Invalid Google Token" });
+  }
+});
 
 // Step 1: Vendor Google Login 
 router.get("/google/vendor",

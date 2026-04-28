@@ -32,7 +32,7 @@ const EventPage = () => {
 
                 console.log(formattedDates);
                 setdates(formattedDates);
-                // setActiveVariant(variant)
+                setActiveVariant(variant);
 
             } catch (err) {
                 setError("Failed to load event post details. Please try again later.");
