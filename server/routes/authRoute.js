@@ -17,7 +17,7 @@ router.get(
 );
 
 // step 1: user Google Login in android
-app.post('/auth/google/user', async (req, res) => {
+router.post('/app/google/user', async (req, res) => {
   const { token } = req.body;
 
   if (!token) {
