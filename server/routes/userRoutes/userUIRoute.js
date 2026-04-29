@@ -95,7 +95,7 @@ router.post('/booking/:id/:vendor/:variant', authToken, async (req, res) => {
         const body = " you got a new booking please checkout "
         const url = "https://vendor.byslot.online/vendor/bookings"
 
-        await sendPushNotification(vendor.VendorfcmToken, title, body,   )
+        await sendPushNotification(vendor.VendorfcmToken, title, body, url  )
 
         res.status(201).json({
             message: "Event booked successfully",

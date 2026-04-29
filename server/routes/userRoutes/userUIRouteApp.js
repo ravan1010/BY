@@ -2,11 +2,11 @@ import { Router } from "express";
 const router = Router()
 import dotenv from "dotenv"
 import { authToken } from "../../middleware/auth.js";
-import vendorDATA from "../../models/vendorModel.js";
-import EventPostDATA from "../../models/eventpostModel.js";
-import BookingDATA from "../../models/bookingModel.js";
-import { sendPushNotification } from "../../config/firebase.js";
+import vendorDATA from '../../models/vendorModel.js';
+import BookingDATA from '../../models/bookingModel.js';
+import EventPostDATA from '../../models/eventpostModel.js';
 import { auth } from "../../middleware/auth.js";
+import { sendPushNotification } from "../../config/firebase.js";
 dotenv.config()
 
 router.get('/vendors', auth, async (req, res) => {
@@ -90,7 +90,7 @@ router.post('/booking/:id/:vendor/:variant', auth, async (req, res) => {
         const body = " you got a new booking please checkout "
         const url = "https://vendor.byslot.online/vendor/bookings"
 
-        await sendPushNotification(vendor.VendorfcmToken, title, body,   )
+        await sendPushNotification(vendor.VendorfcmToken, title, body, url  )
 
         res.status(201).json({
             message: "Event booked successfully",
