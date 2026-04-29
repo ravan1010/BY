@@ -114,10 +114,6 @@ router.post('/booking/:id/:vendor/:variant', auth, async (req, res) => {
 
 
 
-
-
-
-
 router.get('/get/booking', auth, async (req, res) => {
     try {
         const userId = req.token;
@@ -143,5 +139,27 @@ router.get('/get/booking', auth, async (req, res) => {
     }
 });
 
+
+router.post('/cancel/booking/:id', auth, async (req, res) => {
+    try {
+        const bookings = await BookingDATA.findById(req.params.id)
+
+        if (!bookings) {
+            return res.status(200).json([]); // return empty array
+        }
+
+        bookings.status = "cancel";
+        await bookings.save()
+
+        res.status(200).json({message: 'cancel successfully'});
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Failed to fetch bookings",
+            error
+        });
+    }
+});
 
 export default router

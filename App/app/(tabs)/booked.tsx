@@ -85,7 +85,7 @@ const Booked = () => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity 
             style={[styles.button, styles.viewButton]} 
-            onPress={() => router.push(`../components/${item.EventPostID._id}/${item.VendorId._id}`)}
+            onPress={() => router.push(`../components/${item.EventPostID._id}/${item.VendorId._id}/${item.VariantID}`)}
           >
             <Text style={styles.buttonText}>View</Text>
           </TouchableOpacity>
