@@ -72,8 +72,8 @@ const EventPage = () => {
                 setSelectedDate(null);
                 router.push("/(tabs)/booked");
             }
-        } catch (error) {
-            Alert.alert("Error", "Booking failed. Please try again.");
+        } catch (error: any) {
+            Alert.alert("Error", error.response?.data?.message || "Booking failed. Please try again.");
         }
     };
 
