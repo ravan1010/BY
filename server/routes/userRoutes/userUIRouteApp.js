@@ -144,7 +144,8 @@ router.post('/cancel/booking/:id', auth, async (req, res) => {
     try {
         const bookings = await BookingDATA.findById(req.params.id)
 
-        if (!bookings) {
+        
+        if (!bookings) { 
             return res.status(200).json([]); // return empty array
         }
 
