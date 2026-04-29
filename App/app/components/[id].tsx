@@ -26,7 +26,7 @@ const VendorDetails = () => {
   useEffect(() => {
     const fetchVendor = async () => {
       try {
-        const res = await api.get(`/api/user/vendor/${id}`);
+        const res = await api.get(`/api/user/app/vendor/${id}`);
         setVendor(res.data);
       } catch (err) {
         setError("Failed to load vendor");
@@ -77,9 +77,9 @@ const VendorDetails = () => {
           {firstEvent ? (
             <TouchableOpacity 
               activeOpacity={0.9}
-            //   onPress={() => 
-            //     router.push(`/event/${firstEvent._id}/${vendor._id}/${firstVariant?._id}`)
-            //   }
+            onPress={() => 
+                router.push(`./${firstEvent._id}/${vendor._id}/${firstVariant?._id}`)
+              }
               style={styles.eventItem}
             >
               <Text style={styles.eventTitle}>{firstEvent.eventName}</Text>

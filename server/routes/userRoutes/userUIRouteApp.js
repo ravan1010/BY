@@ -40,6 +40,72 @@ router.get('/vendor/:id', auth, async (req, res) => {
     }
 }); 
 
+router.get('/vendorPost/:id/:vendor', auth, async (req, res) => {
+    try {   
+        const eventPosts = await EventPostDATA.findById(req.params.id);
+        const vendor = await vendorDATA.findById(req.params.vendor);
+        if (!eventPosts) {
+            return res.status(404).json({ message: "Event posts not found" });
+        }
+        res.status(200).json({eventPosts: eventPosts, vendor: vendor});
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+router.post('/booking/:id/:vendor/:variant', auth, async (req, res) => {
+    try {
+        const userId = req.token;
+
+        const { mobile, seletedDate } = req.body;
+
+        // ✅ validate input
+        if (!mobile || !seletedDate) {
+            return res.status(400).json({ message: "Missing fields" });
+        }
+
+        // ✅ create booking
+        const booking = new BookingDATA({
+            VendorId: req.params.vendor,
+            UserId: userId,
+            EventPostID: req.params.id,
+            VariantID: req.params.variant,
+            UserMobile: mobile,
+            date: seletedDate
+        });
+
+        await booking.save();
+
+        // ✅ update USER bookings
+        await vendorDATA.findByIdAndUpdate(userId, {
+            $push: { UserBookings: booking._id }
+        });
+
+        // ✅ update VENDOR bookings
+        const vendor = await vendorDATA.findByIdAndUpdate(req.params.vendor, {
+            $push: { VendorBookings: booking._id }
+        });
+
+        const title = "new booking";
+        const body = " you got a new booking please checkout "
+        const url = "https://vendor.byslot.online/vendor/bookings"
+
+        await sendPushNotification(vendor.VendorfcmToken, title, body,   )
+
+        res.status(201).json({
+            message: "Event booked successfully",
+            success: true
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Something went wrong",
+            error
+        });
+    }
+});
+
 
 
 
