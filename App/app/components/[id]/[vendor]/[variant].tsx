@@ -61,10 +61,15 @@ const EventPage = () => {
             return Alert.alert("Error", "Please enter a valid 10-digit mobile number and select a date.");
         }
 
+        console.log(typeof selectedDate)
+        const dateObject = new Date(selectedDate);
+
+        console.log(typeof dateObject, dateObject)
+
         try {
             const res = await api.post(`/api/user/app/booking/${id}/${vendor}/${activeVariant}`, {
                 mobile,
-                selectedDate
+                dateObject
             });
             if (res.data.success) {
                 Alert.alert("Success", "Booking successful!");

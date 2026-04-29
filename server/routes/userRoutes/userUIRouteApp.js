@@ -57,14 +57,14 @@ router.post('/booking/:id/:vendor/:variant', auth, async (req, res) => {
     try {
         const userId = req.token;
 
-        const { mobile, seletedDate } = req.body;
+        const { mobile, dateObject } = req.body;
 
         // ✅ validate input
         if (!mobile) {
             return res.status(400).json({ message: "Missing mobile fields" });
         }
 
-        if (!seletedDate) {
+        if (!dateObject) {
             return res.status(400).json({ message: "Missing date fields" });
         }
 
@@ -75,7 +75,7 @@ router.post('/booking/:id/:vendor/:variant', auth, async (req, res) => {
             EventPostID: req.params.id,
             VariantID: req.params.variant,
             UserMobile: mobile,
-            date: seletedDate
+            date: dateObject
         });
 
         await booking.save();
