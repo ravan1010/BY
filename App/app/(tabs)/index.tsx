@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
-import axios from "axios";
 import api from "../api";
 
 // Define your vendor type
@@ -43,7 +42,7 @@ const Home = () => {
   const renderVendor = ({ item }: { item: Vendor }) => (
     <TouchableOpacity 
       style={styles.card} 
-      // onPress={() => router.push(`/vendor/${item._id}`)}
+      onPress={() => router.push(`../components/${item._id}`)}
     >
       <FontAwesome5 name="birthday-cake" size={30} color="#EAB308" />
       

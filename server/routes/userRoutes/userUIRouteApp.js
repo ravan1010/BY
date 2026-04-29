@@ -28,6 +28,17 @@ router.get('/profile', auth, async (req, res) => {
     res.status(200).json({ email: userData.email });
 })
 
+router.get('/vendor/:id', auth, async (req, res) => {
+    try {
+        const vendor = await vendorDATA.findById(req.params.id).populate('eventPosts');
+        if (!vendor) {
+            return res.status(404).json({ message: "Vendor not found" });
+        }
+        res.status(200).json(vendor);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}); 
 
 
 
