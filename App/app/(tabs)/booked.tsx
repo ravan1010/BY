@@ -19,7 +19,7 @@ const Booked = () => {
 
   const fetchData = async () => {
     try {
-      const res = await api.get('/api/user/get/booking');
+      const res = await api.get('/api/user/app/get/booking');
       setBookingData(res.data);
     } catch (error) {
       console.log(error);
@@ -85,7 +85,7 @@ const Booked = () => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity 
             style={[styles.button, styles.viewButton]} 
-            onPress={() => router.push(`/event/${item.EventPostID._id}/${item.VendorId._id}`)}
+            onPress={() => router.push(`../components/${item.EventPostID._id}/${item.VendorId._id}`)}
           >
             <Text style={styles.buttonText}>View</Text>
           </TouchableOpacity>
