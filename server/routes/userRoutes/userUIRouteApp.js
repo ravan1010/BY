@@ -60,11 +60,11 @@ router.post('/booking/:id/:vendor/:variant', auth, async (req, res) => {
         const { mobile, seletedDate } = req.body;
 
         // ✅ validate input
-        if (!mobile ) {
+        if (!mobile) {
             return res.status(400).json({ message: "Missing mobile fields" });
         }
 
-        if (!seletedDate ) {
+        if (!seletedDate) {
             return res.status(400).json({ message: "Missing date fields" });
         }
 
