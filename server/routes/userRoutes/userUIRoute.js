@@ -8,7 +8,6 @@ import BookingDATA from "../../models/bookingModel.js";
 import { sendPushNotification } from "../../config/firebase.js";
 dotenv.config()
 
-
 router.put('/notifications/fcmToken', authToken, async (req, res) => {
     try {
         const userId = req.UA.id;
