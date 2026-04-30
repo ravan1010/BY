@@ -3,10 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import CalendarPicker from "../components/Calendar";
 import Navbar from "../components/navbar";
+import useAdminAuth from '../LOGpages/protect/authmiddleware'
 
 const EventPage = () => {
     const { id, vendor, variant } = useParams();
     const navigate = useNavigate();
+    const { isAdmin } = useAdminAuth()
+
 
     const [activeVariant, setActiveVariant] = useState(null);
     const [eventPost, setEventPost] = useState(null);
@@ -118,50 +121,49 @@ const EventPage = () => {
                             {eventPost.EventType}
                         </p>
 
-            <div className="flex gap-4 border-t-2 border-b-2 py-4 overflow-x-auto scrollbar-hide mb-2 dark:border-gray-700">
-  {eventPost?.variants?.map((v) => (
-    <div
-      key={v._id}
-      onClick={() => {
-        setActiveVariant(v._id);
-        navigate(`/event/${id}/${vendor}/${v._id}`);
-      }}
-      className={`min-w-[120px] p-3 rounded-xl cursor-pointer flex flex-col items-center transition
-        ${
-          activeVariant === v._id
-            ? "border-blue-600 bg-blue-200 dark:bg-blue-900/40 shadow-md"
-            : "bg-white dark:bg-gray-800 border hover:shadow-md"
-        }
+                        <div className="flex gap-4 border-t-2 border-b-2 py-4 overflow-x-auto scrollbar-hide mb-2 dark:border-gray-700">
+                            {eventPost?.variants?.map((v) => (
+                                <div
+                                    key={v._id}
+                                    onClick={() => {
+                                        setActiveVariant(v._id);
+                                        navigate(`/event/${id}/${vendor}/${v._id}`);
+                                    }}
+                                    className={`min-w-[120px] p-3 rounded-xl cursor-pointer flex flex-col items-center transition
+        ${activeVariant === v._id
+                                            ? "border-blue-600 bg-blue-200 dark:bg-blue-900/40 shadow-md"
+                                            : "bg-white dark:bg-gray-800 border hover:shadow-md"
+                                        }
       `}
-    >
-      {/* Image */}
-      {v.images?.[0] && (
-        <img
-          src={v.images[0]}
-          alt={v.name}
-          className="w-full h-20 object-cover rounded-lg mb-2"
-        />
-      )}
+                                >
+                                    {/* Image */}
+                                    {v.images?.[0] && (
+                                        <img
+                                            src={v.images[0]}
+                                            alt={v.name}
+                                            className="w-full h-20 object-cover rounded-lg mb-2"
+                                        />
+                                    )}
 
-      {/* Name */}
-      <p className="text-sm font-medium text-gray-700 dark:text-gray-200 text-center">
-        {v.name}
-      </p>
+                                    {/* Name */}
+                                    <p className="text-sm font-medium text-gray-700 dark:text-gray-200 text-center">
+                                        {v.name}
+                                    </p>
 
-      {/* Price */}
-      <p className="text-lg font-bold text-green-600 dark:text-green-400">
-        ₹ {v.price}
-      </p>
+                                    {/* Price */}
+                                    <p className="text-lg font-bold text-green-600 dark:text-green-400">
+                                        ₹ {v.price}
+                                    </p>
 
-      {/* MRP */}
-      {v.mrp && (
-        <p className="text-xs text-gray-400 dark:text-gray-500 line-through">
-          ₹ {v.mrp}
-        </p>
-      )}
-    </div>
-  ))}
-</div>
+                                    {/* MRP */}
+                                    {v.mrp && (
+                                        <p className="text-xs text-gray-400 dark:text-gray-500 line-through">
+                                            ₹ {v.mrp}
+                                        </p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
 
                         {/* Book Button */}
                         {selectedVariant && (
@@ -242,14 +244,27 @@ const EventPage = () => {
                                                 onChange={(e) => setmobile(e.target.value)}
                                                 className="w-full p-3 border rounded-lg"
                                             />
+                                            {
 
+                                                isAdmin ? 
+                                                
                                             <button
-                                                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg"
+                                                className="w-full bg-blue-400 hover:bg-blue-100 text-white py-2 rounded-lg"
+                                                onClick={() => navigate('/login')}
+                                                disabled={!mobile || mobile.length !== 10}
+                                            >
+                                                Book Now
+                                            </button>
+                                                :
+                                            
+                                            <button
+                                                className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 rounded-lg"
                                                 onClick={bookSubmit}
                                                 disabled={!mobile || mobile.length !== 10}
                                             >
                                                 Book Now
                                             </button>
+                                            }
                                         </div>
                                     )}
                                 </div>

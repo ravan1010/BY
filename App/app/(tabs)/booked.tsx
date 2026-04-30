@@ -44,7 +44,7 @@ const Booked = () => {
           style: "destructive", 
           onPress: async () => {
             try {
-              const res = await api.post(`/api/user/cancel/booking/${id}`);
+              const res = await api.post(`/api/user/app/cancel/booking/${id}`);
               Alert.alert("Success", res.data.message);
               fetchData();
             } catch (error) {

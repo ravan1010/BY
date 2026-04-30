@@ -11,9 +11,11 @@
     "ios": {
       "supportsTablet": true
     },
+    // "splash": {
+    //   "backgroundColor": "#000000"
+    // },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
