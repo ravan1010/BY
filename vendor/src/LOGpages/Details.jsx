@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Details() {
   const navigate = useNavigate();
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   // ✅ initialize properly
   const [eventName, seteventName] = useState("");
@@ -28,23 +28,23 @@ function Details() {
   const [loadingLocation, setLoadingLocation] = useState(true);
 
   // ✅ Check details
-  // const fetchDetails = async () => {
-  //   try {
-  //     const res = await api.get("/api/details/check");
-  //     if (res.data.success) {
-  //       navigate("/");
-  //     } else {
-  //       setStep(1);
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     setStep(1);
-  //   }
-  // };
+  const fetchDetails = async () => {
+    try {
+      const res = await api.get("/api/details/check");
+      if (res.data.success) {
+        navigate("/");
+      } else {
+        setStep(1);
+      }
+    } catch (err) {
+      console.error(err);
+      setStep(1);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchDetails();
-  // }, []);
+  useEffect(() => {
+    fetchDetails();
+  }, []);
 
   // ✅ Get location
   const getlivelocation = () => {
