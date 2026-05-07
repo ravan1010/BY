@@ -22,8 +22,6 @@ function App() {
 
         <Route element={<ProtectedADMIN />}>
           <Route path="/details" element={<Details />} />
-                    <Route path="/di" element={<Details />} />
-
           <Route path="/" element={<VendorDashboard />} />
           <Route path="/calendar" element={<VendorCalendar />} />
           <Route path="/eventpost" element={<EventPost />} />
