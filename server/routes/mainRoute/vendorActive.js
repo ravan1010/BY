@@ -5,9 +5,7 @@ import vendorDATA from "../../models/vendorModel.js";
 
 router.get('/vendor/data', async (req, res) => {
   try {
-    console.log(
-        'suas'
-    )
+    
     const vendors = await vendorDATA.find({ role: "vendor", active: "false"  });
     console.log(vendors)
 

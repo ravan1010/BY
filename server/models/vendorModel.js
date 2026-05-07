@@ -62,7 +62,9 @@ const vendorSchema = new mongoose.Schema({
   Commission: {
     type: Number,
     default: 0
-  }
+  },
+  refname : { String },
+  refNo :  { String }
 });
 
 vendorSchema.index({ location: "2dsphere" });

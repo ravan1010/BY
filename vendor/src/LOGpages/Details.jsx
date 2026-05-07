@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Details() {
   const navigate = useNavigate();
 
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   // ✅ initialize properly
   const [eventName, seteventName] = useState("");
@@ -15,27 +15,36 @@ function Details() {
   const [lat, setlat] = useState("");
   const [lng, setlng] = useState("");
 
+  const [refEnable, setrefEnable] = useState(false);
+  const [refname, setrefname] = useState("");
+  const [refNo, setrefNo] = useState("");
+
+  const Enable = () => {
+    setrefEnable(pre => !pre)
+  }
+
+
   const [error, seterror] = useState("");
   const [loadingLocation, setLoadingLocation] = useState(true);
 
   // ✅ Check details
-  const fetchDetails = async () => {
-    try {
-      const res = await api.get("/api/details/check");
-      if (res.data.success) {
-        navigate("/");
-      } else {
-        setStep(1);
-      }
-    } catch (err) {
-      console.error(err);
-      setStep(1);
-    }
-  };
+  // const fetchDetails = async () => {
+  //   try {
+  //     const res = await api.get("/api/details/check");
+  //     if (res.data.success) {
+  //       navigate("/");
+  //     } else {
+  //       setStep(1);
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     setStep(1);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchDetails();
-  }, []);
+  // useEffect(() => {
+  //   fetchDetails();
+  // }, []);
 
   // ✅ Get location
   const getlivelocation = () => {
@@ -80,6 +89,8 @@ function Details() {
         address,
         lat,
         lng,
+        refname,
+        refNo
       });
 
       if (res.data.success) {
@@ -169,6 +180,41 @@ function Details() {
                   ? "Fetching location..."
                   : `Lat: ${lat} | Lng: ${lng}`}
               </p>
+
+              <button
+  onClick={Enable}
+  className={`w-[40%] px-4 py-2 rounded-lg text-white font-semibold transition-all duration-300 ${
+    refEnable
+      ? "bg-red-500 hover:bg-red-600"
+      : "bg-green-500 hover:bg-green-600"
+  }`}
+>
+  {refEnable ? "Ref Disable" : "Ref Enable"}
+</button>
+{
+  refEnable && (
+    <div className="flex flex-col gap-2">
+       <input
+                type="text"
+                placeholder="ref name"
+                className="border w-[100%] rounded-lg px-3 py-2"
+                value={refname}
+                onChange={(e) => setrefname(e.target.value)}
+              />
+
+               <input
+                type="tel"
+                placeholder="ref No"
+                className="border w-[100%] rounded-lg px-3 py-2"
+                value={refNo}
+                onChange={(e) => setrefNo(e.target.value)}
+                minLength={10}
+                maxLength={10}
+                
+              />
+    </div>
+  )
+}
 
               <button
                 type="submit"

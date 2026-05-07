@@ -21,7 +21,7 @@ router.get('/details/check', authenticateToken, async (req, res) => {
 
 router.post('/details', authenticateToken, async (req, res) => {
     const VendorId = req.user.id; // Assuming you have user authentication in place
-    const { description, address, eventName, phone, lat, lng } = req.body;
+    const { description, address, eventName, phone, lat, lng, refname, refNo } = req.body;
     console.log(eventName, phone, description, address, lat, lng, VendorId);
     
     if (!description || !address || !eventName || !phone || !lat || !lng) {
@@ -35,6 +35,8 @@ router.post('/details', authenticateToken, async (req, res) => {
             address,
             eventName,
             phone,
+            refname,
+            refNo,
             location: {
                 type: "Point",
                 coordinates: [lng, lat],

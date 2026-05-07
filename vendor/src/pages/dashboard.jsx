@@ -150,6 +150,10 @@ export default function VendorDashboard() {
             <List size={20} /> My Events
           </Link>
 
+          <Link to="/di" className="flex items-center gap-2 cursor-pointer hover:text-blue-600">
+            <List size={20} /> My d
+          </Link>
+
           <Link to="/vendor/bookings" className="flex items-center gap-2 cursor-pointer hover:text-blue-600">
             <List size={20} /> Bookings
           </Link>
