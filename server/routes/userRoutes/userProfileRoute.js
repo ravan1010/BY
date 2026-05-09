@@ -8,6 +8,8 @@ dotenv.config()
 router.get('/profile', authToken, async (req, res) => {
     const user = req.UA.id;
 
+    console.log(user)
+
     const userData = await vendorDATA.findById(user);
     if (!userData) {
         return res.status(404).json({ message: "User not found" });
