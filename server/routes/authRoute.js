@@ -20,6 +20,8 @@ router.get(
 router.post('/app/google/user', async (req, res) => {
   const { token } = req.body;
 
+  console.log(token)
+
   if (!token) {
     return res.status(400).json({ error: "Token is required" });
   }
@@ -50,6 +52,7 @@ router.post('/app/google/user', async (req, res) => {
       console.log("Existing user logged in.");
     }
 
+    console.log(user._id)
     // 4. Send the Internal User ID back to the app
     // Note: 'user._id' is the MongoDB ObjectId
     res.json({ 
@@ -57,6 +60,8 @@ router.post('/app/google/user', async (req, res) => {
       userId: user._id, 
       isNewUser: !user.createdAt 
     });
+
+
     
   } catch (error) {
     console.error("Auth Error:", error);
