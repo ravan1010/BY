@@ -3,39 +3,33 @@
     "name": "Byslot",
     "slug": "Byslot",
     "version": "1.0.0",
+    "jsEngine": "hermes",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
-    "scheme": "app",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
+    "splash": {
+      "image": "./assets/images/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
     "android": {
+      "package": "com.ravan10.Byslot",
+      "googleServicesFile": "./google-services1.json",
+      "versionCode": 1,
       "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.ravan10.Byslot"
-    },
-    "web": {
-      "output": "static",
-      "favicon": "./assets/images/logo.png"
+      }
     },
     "plugins": [
       "expo-router",
       "@react-native-google-signin/google-signin"
     ],
-    "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
-    },
     "extra": {
-      "router": {},
       "eas": {
-        "projectId": "e2c03f4e-ebde-43d2-9e47-fe4583bd135f"
-      }
-    }
+        "projectId": "da6487cb-779a-4deb-8608-a9a6e5e9cfe8"
+      },
+      "router": {}
+    },
+    "owner": "ravan10"
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "351018832889",
+    "project_id": "byslot",
+    "storage_bucket": "byslot.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351018832889:android:9bc21729b62154f56da328",
+        "android_client_info": {
+          "package_name": "com.ravan10.Byslot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAozF9gKLC4XDFUzMo2ZQxFYBZxnUjHwmc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

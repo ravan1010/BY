@@ -41,3 +41,24 @@ app-example
 # generated native folders
 /ios
 /android
+
+node_modules
+.git
+.expo
+dist
+build
+android/build
+ios/build
+*.apk
+*.aab
+*.keystore
+*.mp4
+*.mov
+*.zip
+*.rar
+*.psd
+*.ai
+coverage
+.cache
+.vscode
+.idea

@@ -43,7 +43,7 @@ export const auth = (req, res, next) => {
   console.log(token)
 
   if (!token) {
-    return res.status(401).json({ message: "No token, authorization denied" });
+    return res.status(200).json({ message: "No token, authorization denied" });
   }
 
   try {
@@ -53,7 +53,7 @@ export const auth = (req, res, next) => {
     req.token = token;
     next();
   } catch (err) {
-    res.status(401).json({ message: "Token is not valid" });
+    res.status(201).json({ message: "Token is not valid" });
   }
 };
 
