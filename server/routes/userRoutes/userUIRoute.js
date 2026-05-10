@@ -23,7 +23,7 @@ router.put('/notifications/fcmToken', authToken, async (req, res) => {
     }
 });
 
-router.get('/vendors', authToken, async (req, res) => {
+router.get('/vendors', async (req, res) => {
     try {
         const vendors = await vendorDATA.find({role: "vendor", active : true, "eventPosts.0": { $exists: true }});
         res.status(200).json(vendors);
@@ -32,7 +32,7 @@ router.get('/vendors', authToken, async (req, res) => {
     }   
 }) 
 
-router.get('/vendor/:id', authToken, async (req, res) => {
+router.get('/vendor/:id', async (req, res) => {
     try {
         const vendor = await vendorDATA.findById(req.params.id).populate('eventPosts');
         if (!vendor) {
@@ -44,7 +44,7 @@ router.get('/vendor/:id', authToken, async (req, res) => {
     }
 }); 
 
-router.get('/vendorPost/:id/:vendor', authToken, async (req, res) => {
+router.get('/vendorPost/:id/:vendor', async (req, res) => {
     try {   
         const eventPosts = await EventPostDATA.findById(req.params.id);
         const vendor = await vendorDATA.findById(req.params.vendor);
