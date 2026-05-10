@@ -5,6 +5,7 @@ import Navbar from "../components/navbar";
 import { MdCelebration } from "react-icons/md";
 import { LuPartyPopper } from "react-icons/lu";
 import { generateAndSaveFCMToken } from "../utilis/token";
+import Footer from "../components/footer";
   
 const Home = () => {
 
@@ -92,6 +93,7 @@ const Home = () => {
             </div>
           ))}
         </div>
+        <Footer />
       </div>
     </>
   );

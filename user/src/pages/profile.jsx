@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../components/navbar'
 import api from '../api.js'
 import { LogOut } from "lucide-react"
+import Footer from '../components/footer.jsx'
 
 const Profile = () => {
   const [userMail, setUserMail] = useState("");
@@ -64,6 +65,7 @@ const Profile = () => {
 
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
