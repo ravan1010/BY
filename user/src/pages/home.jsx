@@ -136,6 +136,9 @@ const Home = () => {
             <div
               key={post._id}
               className="border rounded-xl shadow-md overflow-hidden hover:border-5"
+              onClick={() => 
+                  navigate(`/event/${post._id}/${post.VendorId}/${post.variants[0]._id}`)
+              }
             >
               <img
                 src={post.variants[0].images[0]} // Display first image of the first variant
