@@ -11,7 +11,7 @@ const Home = () => {
 
   const [vendors, setVendors] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState("");
+  const [selectedEvent, setSelectedEvent] = useState("all");
   const [permissionChecked, setPermissionChecked] = useState(null);
 
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const Home = () => {
       setVendors(res.data);
 
       setFilteredPosts(res.data.eventPosts || []);
+
     } catch (err) {
       console.error(err);
     }
@@ -67,7 +68,7 @@ const Home = () => {
   // Unique Events
   const uniqueEvents = [
     "all",
-    ...new Set(Array.isArray(vendors.eventPosts) ? vendors.eventPosts.map((post) => post.EventType) : []  ),
+    ...new Set(Array.isArray(vendors.eventPosts) && vendors.eventPosts.length > 0 ? vendors.eventPosts.map((post) => post.EventType) : []),
   ];
 
   if (permissionChecked === false) {
@@ -103,17 +104,26 @@ const Home = () => {
         </h1>
 
         {/* Filter Buttons */}
-        <div className="flex flex-wrap gap-3 justify-center mb-6">
+        {/* Filter Buttons */}
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide py-2 px-1 mb-6">
           {uniqueEvents.map((event, index) => (
             <button
               key={index}
               onClick={() => handleFilter(event)}
-              className={`px-4 py-2 rounded-lg border transition
-              ${selectedEvent === event
-                  ? "bg-black text-white"
-                  : "bg-white text-black"
+              className={`
+        whitespace-nowrap
+        px-5 py-2
+        rounded-full
+        border
+        font-medium
+        transition-all duration-300
+        shadow-sm
+        hover:scale-105
+        ${selectedEvent === event
+                  ? "bg-gradient-to-r from-pink-500 to-yellow-500 text-white border-transparent shadow-lg"
+                  : "bg-white text-gray-700 hover:bg-gray-100 border-gray-300"
                 }
-            `}
+      `}
             >
               {event}
             </button>
@@ -125,25 +135,25 @@ const Home = () => {
           {filteredPosts.map((post) => (
             <div
               key={post._id}
-              className="border rounded-xl shadow-md overflow-hidden"
+              className="border rounded-xl shadow-md overflow-hidden hover:border-5"
             >
               <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-52 object-cover"
+                src={post.variants[0].images[0]} // Display first image of the first variant
+                alt={post.variants[0].title}
+                className="w-full h-52 object-cover cursor-pointer hover:scale-105 transition-transform"
               />
 
               <div className="p-4">
                 <h2 className="text-xl font-semibold">
-                  {post.title}
+                  {post.variants[0].name}
                 </h2>
 
                 <p className="text-gray-500 mt-2">
-                  {post.description}
+                  {post.variants[0].description}
                 </p>
 
                 <p className="text-sm text-blue-500 mt-3">
-                  {post.eventType}
+                  {post.EventType}
                 </p>
               </div>
             </div>
