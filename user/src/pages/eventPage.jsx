@@ -3,12 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import CalendarPicker from "../components/Calendar";
 import Navbar from "../components/navbar";
-import useAdminAuth from '../LOGpages/protect/authmiddleware'
+// import useAdminAuth from '../LOGpages/protect/authmiddleware'
 
 const EventPage = () => {
     const { id, vendor, variant } = useParams();
     const navigate = useNavigate();
-    const { isAdmin } = useAdminAuth()
+    // const { isAdmin } = useAdminAuth()
 
 
     const [activeVariant, setActiveVariant] = useState(null);
@@ -244,18 +244,7 @@ const EventPage = () => {
                                                 onChange={(e) => setmobile(e.target.value)}
                                                 className="w-full p-3 border rounded-lg"
                                             />
-                                            {
-
-                                                isAdmin ? 
-                                                
-                                            <button
-                                                className="w-full bg-blue-400 hover:bg-blue-100 text-white py-2 rounded-lg"
-                                                onClick={() => navigate('/login')}
-                                                disabled={!mobile || mobile.length !== 10}
-                                            >
-                                                Book Now
-                                            </button>
-                                                :
+                                        
                                             
                                             <button
                                                 className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 rounded-lg"
@@ -264,7 +253,7 @@ const EventPage = () => {
                                             >
                                                 Book Now
                                             </button>
-                                            }
+                                            
                                         </div>
                                     )}
                                 </div>
