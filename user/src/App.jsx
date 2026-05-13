@@ -7,7 +7,6 @@ import ProtectedUSER from "./LOGpages/protect/authroute";
 import Home from "./pages/home";
 import Booked from "./pages/Booked";
 import Profile from "./pages/profile";
-import VendorDetails from "./pages/VendorDetails";
 import EventPage from "./pages/eventPage";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 
@@ -24,7 +23,6 @@ function App() {
         <Route element={<ProtectedUSER />}>
           <Route path="/booked" element={<Booked />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/vendor/:id" element={<VendorDetails />} />
           <Route path="/event/:id/:vendor/:variant" element={<EventPage />} />
 
           {/* <Route path="*"  /> */}

@@ -13,6 +13,7 @@ const EventPage = () => {
 
     const [activeVariant, setActiveVariant] = useState(null);
     const [eventPost, setEventPost] = useState(null);
+
     const [dates, setdates] = useState([]);
     const [mobile, setmobile] = useState("");
     const [seletedDate, setseleteDate] = useState(null);
@@ -72,8 +73,10 @@ const EventPage = () => {
 
     if (loading) {
         return (
-            <div>
-                <p className="mt-20 text-center">Loading event post...</p>
+            <div className="h-screen flex items-center justify-center">
+                <h1 className="text-2xl font-bold animate-pulse">
+                    Loading...
+                </h1>
             </div>
         );
     }
@@ -137,13 +140,13 @@ const EventPage = () => {
       `}
                                 >
                                     {/* Image */}
-                                    {v.images?.[0] && (
-                                        <img
-                                            src={v.images[0]}
-                                            alt={v.name}
-                                            className="w-full h-20 object-cover rounded-lg mb-2"
-                                        />
-                                    )}
+                               {
+                               v.images?.[0] && ( 
+                                <img src={v.images[0]} 
+                                alt={v.name} 
+                                className="w-full h-20 object-cover rounded-lg mb-2" 
+                                /> 
+                            )}
 
                                     {/* Name */}
                                     <p className="text-sm font-medium text-gray-700 dark:text-gray-200 text-center">
@@ -244,8 +247,8 @@ const EventPage = () => {
                                                 onChange={(e) => setmobile(e.target.value)}
                                                 className="w-full p-3 border rounded-lg"
                                             />
-                                        
-                                            
+
+
                                             <button
                                                 className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 rounded-lg"
                                                 onClick={bookSubmit}
@@ -253,7 +256,7 @@ const EventPage = () => {
                                             >
                                                 Book Now
                                             </button>
-                                            
+
                                         </div>
                                     )}
                                 </div>
