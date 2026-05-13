@@ -39,7 +39,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Button */}
-          <div className="md:hidden">
+          <div className="md:hidden text-gray-700 hover:text-blue-600 ">
             <button onClick={() => setIsOpen(!isOpen)}>
               ☰
             </button>
@@ -49,23 +49,49 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white shadow-md">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              onClick={() => setIsOpen(false)}
-              className={`block px-4 py-3 border-b text-gray-700 ${
-                location.pathname === link.path
-                  ? "bg-blue-100 text-blue-600"
-                  : ""
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-      )}
+  <div
+    className="
+      md:hidden
+      absolute
+      top-16
+      left-0
+      w-full
+      bg-white/95
+      backdrop-blur-md
+      shadow-2xl
+      border-t
+      animate-slideDown
+      z-50
+    "
+  >
+    <div className="flex flex-col p-3 gap-2">
+      {navLinks.map((link) => (
+        <Link
+          key={link.name}
+          to={link.path}
+          onClick={() => setIsOpen(false)}
+          className={`
+            px-4 py-3
+            rounded-xl
+            font-medium
+            transition-all duration-300
+            flex items-center
+            hover:translate-x-2
+            hover:shadow-md
+
+            ${
+              location.pathname === link.path
+                ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
+                : "text-gray-700 hover:bg-gray-100"
+            }
+          `}
+        >
+          {link.name}
+        </Link>
+      ))}
+    </div>
+  </div>
+)}
     </nav>
   );
 }
