@@ -99,6 +99,7 @@ router.delete('/eventpost/:id', authenticateToken, async (req, res) => {
     }
 
     await EventPostDATA.findByIdAndDelete(id);
+    await vendorDATA.findByIdAndUpdate(VendorId, { $pull: { eventPosts: id } });
     res.status(200).json({ message: "Event post deleted successfully", success: true });
 });
 
