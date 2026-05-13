@@ -67,7 +67,7 @@ const Home = () => {
   // Unique Events
   const uniqueEvents = [
     "all",
-    ...new Set(vendor.eventPosts.map((post) => post.eventType)),
+    ...new Set(Array.isArray(vendors.eventPosts) ? vendors.eventPosts.map((post) => post.EventType) : []  ),
   ];
 
   if (permissionChecked === false) {
