@@ -6,10 +6,12 @@ import { MdCelebration } from "react-icons/md";
 import { LuPartyPopper } from "react-icons/lu";
 import { generateAndSaveFCMToken } from "../utilis/token";
 import Footer from "../components/footer";
-  
+
 const Home = () => {
 
   const [vendors, setVendors] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState("");
   const [permissionChecked, setPermissionChecked] = useState(null);
 
   const navigate = useNavigate();
@@ -19,22 +21,24 @@ const Home = () => {
     try {
       const res = await api.get("/api/user/vendors/posts");
       setVendors(res.data);
+
+      setFilteredPosts(res.data.eventPosts || []);
     } catch (err) {
-      console.error(err); 
+      console.error(err);
     }
   };
 
   // ✅ Handle notification permission
   const checkPermission = async () => {
-      generateAndSaveFCMToken();
-        const permission = await Notification.requestPermission();
-        if (permission === "granted") {
-          console.log("Notification permission granted.");
-          setPermissionChecked(true);
-        }else {
-          console.log("Notification permission denied.");
-          setPermissionChecked(false);
-        }
+    generateAndSaveFCMToken();
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      console.log("Notification permission granted.");
+      setPermissionChecked(true);
+    } else {
+      console.log("Notification permission denied.");
+      setPermissionChecked(false);
+    }
   };
 
 
@@ -42,6 +46,29 @@ const Home = () => {
     fetchVendors();
     checkPermission();
   }, []);
+
+
+  // Filter Posts
+  const handleFilter = (eventName) => {
+    setSelectedEvent(eventName);
+
+    if (eventName === "all") {
+      setFilteredPosts(vendors.eventPosts);
+      return;
+    }
+
+    const filtered = vendors.eventPosts.filter(
+      (post) => post.eventType === eventName
+    );
+
+    setFilteredPosts(filtered);
+  };
+
+  // Unique Events
+  const uniqueEvents = [
+    "all",
+    ...new Set(vendor.eventPosts.map((post) => post.eventType)),
+  ];
 
   if (permissionChecked === false) {
     return (
@@ -62,41 +89,72 @@ const Home = () => {
     );
   }
 
+  if (!vendors) return <h1>Loading...</h1>;
+
+
   return (
     <>
       <Navbar />
+      <div className="p-5">
 
-      {/* ✅ Vendor List */}
-      <div className="mt-20 p-4">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Available Vendors
+        {/* Vendor Name */}
+        <h1 className="text-3xl font-bold mb-6 text-center">
+          Byslot
         </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {vendors.map((vendor) => (
-            <div
-              key={vendor._id}
-              onClick={() => navigate(`/vendor/${vendor._id}`)}
-              className="bg-white shadow-md rounded-xl p-5 flex flex-col items-center justify-center border hover:shadow-xl transition cursor-pointer"
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap gap-3 justify-center mb-6">
+          {uniqueEvents.map((event, index) => (
+            <button
+              key={index}
+              onClick={() => handleFilter(event)}
+              className={`px-4 py-2 rounded-lg border transition
+              ${selectedEvent === event
+                  ? "bg-black text-white"
+                  : "bg-white text-black"
+                }
+            `}
             >
-              <LuPartyPopper size={30} className="text-yellow-500 mb-2" />
+              {event}
+            </button>
+          ))}
+        </div>
 
-              <h2 className="text-lg font-semibold text-gray-800 text-center">
-                {vendor.eventName}
-              </h2>
+        {/* Posts */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+          {filteredPosts.map((post) => (
+            <div
+              key={post._id}
+              className="border rounded-xl shadow-md overflow-hidden"
+            >
+              <img
+                src={post.image}
+                alt={post.title}
+                className="w-full h-52 object-cover"
+              />
 
-              <p className="text-sm text-gray-500 mt-1">
-                Click to view details
-              </p>
+              <div className="p-4">
+                <h2 className="text-xl font-semibold">
+                  {post.title}
+                </h2>
 
-              <MdCelebration size={30} className="text-yellow-500 mt-2" />
+                <p className="text-gray-500 mt-2">
+                  {post.description}
+                </p>
+
+                <p className="text-sm text-blue-500 mt-3">
+                  {post.eventType}
+                </p>
+              </div>
             </div>
           ))}
         </div>
-        <Footer />
+
       </div>
+      <Footer />
     </>
   );
 };
+
 
 export default Home;
