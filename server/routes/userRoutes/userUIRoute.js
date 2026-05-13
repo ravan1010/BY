@@ -23,9 +23,10 @@ router.put('/notifications/fcmToken', authToken, async (req, res) => {
     }
 });
 
-router.get('/vendors', async (req, res) => {
+router.get('/vendors/posts', async (req, res) => {
     try {
-        const vendors = await vendorDATA.find({role: "vendor", active : true, "eventPosts.0": { $exists: true }});
+        // const vendors = await vendorDATA.find({role: "vendor", active : true, "eventPosts.0": { $exists: true } }).populate('eventPosts');
+        const vendors = await vendorDATA.findById("69ee01f1df0f76b9200bf020").populate('eventPosts');
         res.status(200).json(vendors);
     } catch (err) {
         res.status(500).json({ message: err.message });

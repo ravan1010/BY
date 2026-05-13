@@ -17,7 +17,7 @@ const Home = () => {
   // ✅ Fetch vendors
   const fetchVendors = async () => {
     try {
-      const res = await api.get("/api/user/vendors");
+      const res = await api.get("/api/user/vendors/posts");
       setVendors(res.data);
     } catch (err) {
       console.error(err); 
